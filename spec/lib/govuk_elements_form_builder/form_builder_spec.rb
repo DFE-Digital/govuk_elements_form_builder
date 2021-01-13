@@ -10,7 +10,7 @@ RSpec.describe GovukElementsFormBuilder::FormBuilder do
     expect(GovukElementsFormBuilder::VERSION).to eq("1.2.0")
   end
 
-  let(:helper) {TestHelper.new}
+  let(:helper) {TestHelper.new(ActionView::LookupContext.new(nil), {}, nil)}
   let(:resource) {Person.new}
   let(:resource_name) {:person}
   let(:builder) {described_class.new resource_name, resource, helper, {}}

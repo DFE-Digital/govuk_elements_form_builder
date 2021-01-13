@@ -124,7 +124,7 @@ module GovukElementsErrorsHelper
   end
 
   def self.error_summary_messages object, child_to_parents
-    object.errors.keys.map do |attribute|
+    object.errors.attribute_names.map do |attribute|
       error_summary_message object, attribute, child_to_parents
     end
   end
