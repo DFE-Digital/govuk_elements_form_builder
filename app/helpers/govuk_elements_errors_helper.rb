@@ -46,7 +46,7 @@ module GovukElementsErrorsHelper
   end
 
   def self.child_to_parent object, child_to_parents={}, parent_object=nil
-    return child_to_parents if object == parent_object
+    return child_to_parents if (object == parent_object || object.is_a?(ActiveModel::Error))
     parent_object ||= object
 
     attribute_objects(object).each do |child|
@@ -124,7 +124,13 @@ module GovukElementsErrorsHelper
   end
 
   def self.error_summary_messages object, child_to_parents
-    object.errors.keys.map do |attribute|
+    errors = if object.errors.is_a?(Array)
+               ActiveModel::Errors.new(object)
+             else
+               object.errors
+             end
+
+    errors.attribute_names.map do |attribute|
       error_summary_message object, attribute, child_to_parents
     end
   end
